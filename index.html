@@ -2,12 +2,12 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Bundled Page</title>
+  <title>R&D 커리어랩 펠로우십 학생참여자 가이드</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #faf9f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-    #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: #666; background: #fff; padding: 8px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); z-index: 10000; }
-    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #faf9f5; z-index: 9999; }
+    #__bundler_loading { display: none !important; }
+    #__bundler_thumbnail { display: none !important; }
     #__bundler_thumbnail svg { width: 100%; height: 100%; object-fit: contain; }
     #__bundler_placeholder { color: #999; font-size: 14px; }
   </style>
@@ -19,16 +19,7 @@
   </noscript>
 </head>
 <body>
-  <div id="__bundler_thumbnail">
-  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <rect width="100" height="100" rx="16" fill="#121212"></rect>
-    <circle cx="50" cy="50" r="22" fill="#1ed760"></circle>
-    <text x="50" y="58" text-anchor="middle" font-family="Manrope, sans-serif" font-size="20" font-weight="800" fill="#121212">R&amp;D</text>
-  </svg>
-</div>
-  <div id="__bundler_loading">Unpacking...</div>
-
-  <script>
+<script>
     
 document.addEventListener('DOMContentLoaded', async function() {
   const loading = document.getElementById('__bundler_loading');
@@ -56,6 +47,12 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     const manifest = JSON.parse(manifestEl.textContent);
     let template = JSON.parse(templateEl.textContent);
+
+    // Force browser title after the bundled page is rendered.
+    template = template.replace(/<title>[\s\S]*?<\/title>/i, '<title>R&D 커리어랩 펠로우십</title>');
+    if (!/<title>/i.test(template)) {
+      template = template.replace(/<head([^>]*)>/i, '<head$1>\n<title>R&D 커리어랩 펠로우십</title>');
+    }
 
     const uuids = Object.keys(manifest);
     setStatus('Unpacking ' + uuids.length + ' assets...');
